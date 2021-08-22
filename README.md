@@ -1,4 +1,4 @@
-# BrokenLinkHijacking
+# BrokenLinkHijacker
 
 A golang based tool that recursively crawls websites to find broken links.
 
