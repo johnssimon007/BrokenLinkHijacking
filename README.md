@@ -7,5 +7,7 @@ A golang based tool that recursively crawls websites to find broken links.
 # Usage
 
 `go get ./...`
+
 `go build`
+
 `go run main.go https://xninja.xyz`
