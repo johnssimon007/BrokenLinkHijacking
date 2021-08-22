@@ -24,14 +24,14 @@ func main() {
   args := flag.Args()
   fmt.Println(args)
   if len(args) < 1 {
-    fmt.Println("specify the target")
+    fmt.Println("Please specify a domain in the format specified below, \n Usage Example: go run main.go https://example.com")
     os.Exit(1)
   }
 
   queue := make(chan string)
 
   go func() { queue <- args[0] }()
-
+  fmt.Printf(string("\033[1;33m [X] Starting Crawler -  This May Take Some Time Depending Upon The Amount Of Links Present \n \033[0m"))
   for uri := range queue {
     enqueue(uri, queue)
   }
@@ -63,6 +63,8 @@ func enqueue(uri string, queue chan string) {
     "youtube.com":"youtube",
     "twitch.com":"twitch",
     "discord.com":"discord",
+    "instagram.com":"instagram",
+    
              }
   for _, link := range links {
 
