@@ -1,10 +1,13 @@
 # BrokenLinkHijacking
 
-A golang tool which crawls the website and searches for all the Broken Links.
-
+A golang based tool that recursively crawls websites to find broken links.
 
 ![Screenshot](screenshot.png)
 
-#Usage
+# Usage
 
+`
+go get ./...
+go build
 go run main.go https://xninja.xyz
+`
