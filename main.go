@@ -84,9 +84,10 @@ func enqueue(uri string, queue chan string) {
         _,domain_exists:= domain_list[domain]
         if exists && domain_exists{
 
-            fmt.Printf(string("\033[31m Might be vulnerable %s \n"),link)
+          fmt.Printf(string("\033[1;33m %s Seems to be vulnerable\033[0m \n"),link)
+
         }else if exists && !domain_exists{
-          fmt.Printf(string("\033[31m Seems to be vulnerable %s  \n"),link)
+          fmt.Printf(string("\033[1;33m %s Might be vulnerable\033[0m \n"),link)
         }
           fmt.Println(absolute)
         go func() { queue <- absolute }()
