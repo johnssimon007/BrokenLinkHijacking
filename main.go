@@ -7,6 +7,7 @@ import (
   "github.com/jackdanger/collectlinks"
   "net/http"
   "net/url"
+  "strings"
   "os"
 )
 
@@ -24,7 +25,7 @@ func main() {
   args := flag.Args()
   fmt.Println(args)
   if len(args) < 1 {
-    fmt.Println("Please specify start page")
+    fmt.Println("specify the target")
     os.Exit(1)
   }
 
@@ -38,7 +39,7 @@ func main() {
 }
 
 func enqueue(uri string, queue chan string) {
-  fmt.Println("fetching", uri)
+
   visited[uri] = true
   transport := &http.Transport{
     TLSClientConfig: &tls.Config{
@@ -53,11 +54,40 @@ func enqueue(uri string, queue chan string) {
   defer resp.Body.Close()
 
   links := collectlinks.All(resp.Body)
-
+  status_codes:=map[int]string{
+    404:"Resource Not FOUND",
+  }
+  domain_list:=map[string]string{
+    "linkedin.com":"Linkedin",
+    "facebook.com":"Facebook",
+    "twittter.com":"twitter",
+    "youtube.com":"youtube",
+    "twitch.com":"twitch",
+    "discord.com":"discord",
+             }
   for _, link := range links {
+
     absolute := fixUrl(link, uri)
     if uri != "" {
       if !visited[absolute] {
+        response, err := client.Get(absolute)
+       if err!=nil{
+         return
+       }
+        u, err := url.Parse(absolute)
+             if err != nil {
+                 panic(err)
+             }
+             parts := strings.Split(u.Hostname(), ".")
+             domain := parts[len(parts)-2] + "." + parts[len(parts)-1]
+            _, exists := status_codes[response.StatusCode]
+
+        _,domain_exists:= domain_list[domain]
+        if exists && domain_exists{
+
+            fmt.Println("Seems to be vulnerable",link)
+        }
+          fmt.Println(absolute)
         go func() { queue <- absolute }()
       }
     }
