@@ -6,6 +6,7 @@ import (
   "fmt"
   "github.com/jackdanger/collectlinks"
   "net/http"
+  "github.com/common-nighthawk/go-figure"
   "net/url"
   "strings"
   "os"
@@ -15,11 +16,9 @@ import (
 var visited = make(map[string]bool)
 
 
-
-
-
-
 func main() {
+  ascii := figure.NewColorFigure("Broken Link Hijacker", "", "yellow", true)
+	ascii.Print()
   flag.Parse()
 
   args := flag.Args()
@@ -85,7 +84,9 @@ func enqueue(uri string, queue chan string) {
         _,domain_exists:= domain_list[domain]
         if exists && domain_exists{
 
-            fmt.Println("Seems to be vulnerable",link)
+            fmt.Printf(string("\033[31m Might be vulnerable %s \n"),link)
+        }else if exists && !domain_exists{
+          fmt.Printf(string("\033[31m Seems to be vulnerable %s  \n"),link)
         }
           fmt.Println(absolute)
         go func() { queue <- absolute }()
