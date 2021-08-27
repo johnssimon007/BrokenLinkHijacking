@@ -10,11 +10,12 @@ import (
   "net/url"
   "strings"
   "os"
+  "sync"
 )
 
 
 var visited = make(map[string]bool)
-
+var wg sync.WaitGroup
 
 func main() {
   ascii := figure.NewColorFigure("Broken Link Hijacker", "", "yellow", true)
@@ -33,7 +34,11 @@ func main() {
   go func() { queue <- args[0] }()
   fmt.Printf(string("\033[1;33m [X] Starting Crawler -  This May Take Some Time Depending Upon The Amount Of Links Present \n \033[0m"))
   for uri := range queue {
+    wg.Add(1)
+    go func(){
+      defer wg.Done()
     enqueue(uri, queue)
+  }()
   }
 }
 
