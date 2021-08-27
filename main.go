@@ -45,7 +45,7 @@ func main() {
 }
 
 func enqueue(uri string, queue chan string) {
-  visited.Store(uri, true)
+   visited.Store(uri, true)
 
    transport := &http.Transport{
       MaxIdleConns:      30,
@@ -93,7 +93,7 @@ func enqueue(uri string, queue chan string) {
    for _, link := range links {
       absolute := fixUrl(link, uri)
       if uri != "" {
-      _, already_visited := visited.Load(absolute)
+         _, already_visited := visited.Load(absolute)
          if !already_visited {
             response, error := client.Get(absolute)
 
