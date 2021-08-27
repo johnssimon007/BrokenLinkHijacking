@@ -4,13 +4,19 @@ A golang based tool that recursively crawls websites to find broken links.
 
 ![Screenshot](screenshot.png)
 
+### Installation 
+
+`go get github.com/johnssimon007/BrokenLinkHijacking`
+
 #### Usage
 
+`BrokenLinkHijacking https://xninja.xyz`
 
-`go build`
+### Docker Usage
 
-`./BrokenLinkHijacking https://xninja.xyz`
+`docker build -t brokenlinkhijacker .`
 
+`docker run brokenlinkhijacker:latest ./BrokenLinkHijacking https://xninja.xyz`
 
 #### Contributors
 
