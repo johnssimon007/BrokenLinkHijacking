@@ -6,16 +6,16 @@ import (
   "fmt"
   "github.com/jackdanger/collectlinks"
   "net/http"
+  "net"
+  "time"
   "github.com/common-nighthawk/go-figure"
   "net/url"
   "strings"
   "os"
-  "sync"
 )
 
 
 var visited = make(map[string]bool)
-var wg sync.WaitGroup
 
 func main() {
   ascii := figure.NewColorFigure("Broken Link Hijacker", "", "yellow", true)
@@ -34,9 +34,7 @@ func main() {
   go func() { queue <- args[0] }()
   fmt.Printf(string("\033[1;33m [X] Starting Crawler -  This May Take Some Time Depending Upon The Amount Of Links Present \n \033[0m"))
   for uri := range queue {
-    wg.Add(1)
-    go func(){
-      defer wg.Done()
+  go func(){
     enqueue(uri, queue)
   }()
   }
@@ -45,18 +43,33 @@ func main() {
 func enqueue(uri string, queue chan string) {
 
   visited[uri] = true
+
   transport := &http.Transport{
-    TLSClientConfig: &tls.Config{
-      InsecureSkipVerify: true,
-    },
-  }
-  client := http.Client{Transport: transport}
+		MaxIdleConns:      30,
+		IdleConnTimeout:   time.Second,
+		DisableKeepAlives: true,
+		TLSClientConfig:   &tls.Config{InsecureSkipVerify: true},
+		DialContext: (&net.Dialer{
+			Timeout:   2 * time.Second,
+			KeepAlive: time.Second,
+		}).DialContext,
+	}
+
+  client := http.Client{Transport: transport,Timeout:2*time.Second}
   resp, err := client.Get(uri)
+
+
   if err != nil {
     return
-  }
-  defer resp.Body.Close()
 
+  }
+  if resp != nil {
+if resp.Body != nil {
+
+
+    defer resp.Body.Close()
+}
+}
   links := collectlinks.All(resp.Body)
   status_codes:=map[int]string{
     404:"Resource Not FOUND",
@@ -76,13 +89,20 @@ func enqueue(uri string, queue chan string) {
     absolute := fixUrl(link, uri)
     if uri != "" {
       if !visited[absolute] {
-        response, err := client.Get(absolute)
-       if err!=nil{
+        response, error := client.Get(absolute)
+       if error!=nil{
          return
        }
+       if response != nil {
+	if response.Body != nil {
+
+             defer response.Body.Close()
+	}
+}
         u, err := url.Parse(absolute)
              if err != nil {
-                 panic(err)
+               return
+
              }
              parts := strings.Split(u.Hostname(), ".")
              domain := parts[len(parts)-2] + "." + parts[len(parts)-1]
