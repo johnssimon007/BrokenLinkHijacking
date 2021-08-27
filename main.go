@@ -64,7 +64,7 @@ func enqueue(uri string, queue chan string) {
     "twitch.com":"twitch",
     "discord.com":"discord",
     "instagram.com":"instagram",
-    
+
              }
   for _, link := range links {
 
@@ -86,10 +86,10 @@ func enqueue(uri string, queue chan string) {
         _,domain_exists:= domain_list[domain]
         if exists && domain_exists{
 
-          fmt.Printf(string("\033[1;33m %s Seems to be vulnerable\033[0m \n"),link)
+          fmt.Printf(string("\033[1;33m %s Seems to be vulnerable\033[0m \n"),absolute)
 
         }else if exists && !domain_exists{
-          fmt.Printf(string("\033[1;33m %s Might be vulnerable\033[0m \n"),link)
+          fmt.Printf(string("\033[1;33m %s Might be vulnerable\033[0m \n"),absolute)
         }
           fmt.Println(absolute)
         go func() { queue <- absolute }()
