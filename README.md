@@ -4,7 +4,7 @@ A golang based tool that recursively crawls websites to find broken links.
 
 ![Screenshot](screenshot.png)
 
-### Installation 
+### Installation
 
 `go get github.com/johnssimon007/BrokenLinkHijacking`
 

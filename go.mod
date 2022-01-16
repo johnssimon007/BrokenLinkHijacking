@@ -1,9 +1,14 @@
 module BrokenLinkHijacking
 
-go 1.16
+go 1.17
 
 require (
-	github.com/common-nighthawk/go-figure v0.0.0-20210622060536-734e95fb86be // indirect
-	github.com/jackdanger/collectlinks v0.0.0-20160421202702-24c4ee2870ba // indirect
-	golang.org/x/net v0.0.0-20210825183410-e898025ed96a // indirect
+	github.com/gookit/color v1.5.0
+	github.com/jackdanger/collectlinks v0.0.0-20160421202702-24c4ee2870ba
+)
+
+require (
+	github.com/xo/terminfo v0.0.0-20210125001918-ca9a967f8778 // indirect
+	golang.org/x/net v0.0.0-20220114011407-0dd24b26b47d // indirect
+	golang.org/x/sys v0.0.0-20210423082822-04245dca01da // indirect
 )
