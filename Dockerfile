@@ -5,8 +5,7 @@ WORKDIR /go/src/app
 
 ADD . /go/src/app
 
-RUN go get github.com/common-nighthawk/go-figure
-RUN go get github.com/jackdanger/collectlinks
+RUN go get -u
 
 # build executable
 RUN go build
