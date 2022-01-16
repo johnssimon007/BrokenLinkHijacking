@@ -7,8 +7,8 @@ A golang based tool that recursively crawls websites to find broken links.
 
 #### Usage
 
-`go run main.go https://xninja.xyz`
-
+`go build`
+`./BrokenLinkHijacking https://xninja.xyz`
 ### Docker Usage
 
 `docker build -t brokenlinkhijacker .`
