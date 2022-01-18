@@ -1,4 +1,4 @@
-module BrokenLinkHijacking
+module github.com/johnssimon007/BrokenLinkHijacking
 
 go 1.17
 
@@ -10,5 +10,5 @@ require (
 require (
 	github.com/xo/terminfo v0.0.0-20210125001918-ca9a967f8778 // indirect
 	golang.org/x/net v0.0.0-20220114011407-0dd24b26b47d // indirect
-	golang.org/x/sys v0.0.0-20210423082822-04245dca01da // indirect
+	golang.org/x/sys v0.0.0-20220114195835-da31bd327af9 // indirect
 )
